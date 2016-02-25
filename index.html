@@ -1,7 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Home Automation Web Server with BeagleBone</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Automation Web Server with BeagleBone</title>
+    <link href="/">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
     <script src = "/socket.io/socket.io.js" ></script>
     <script>
         // Establishing connection with server
@@ -42,15 +47,20 @@
         
     </script>
 </head>
-
+  <body>
+    <div class="container-fluid">
+    <div class="row">
+    <div class="col-xs-6">
     <h2>SSR 1 Heater</h2>
     <form oninput='x1.value=s1.value'>
-    <button type="button" id="s1_btn" onclick="changeState(1, 0);">ON</button>
+    <button type="button" class="btn btn-danger" id="s1_btn" onclick="changeState(1, 0);">ON</button>
     <button type="button" onclick="changeState(0, 0);">OFF</button>
     <input type="range" id="s1" name="slider1" step=5 value=0 onChange="set_slider('s1');" min="0" max="100">   </input>
     <output name="x1"> </output>
     </form>
-    
+    </div>
+
+    <div class="col-xs-6">
     <h2>SSR 2 Heater</h2>
     <form oninput='x2.value=s2.value'>
     <button type="button" id="s2_btn" onclick="changeState(1, 1);">ON</button>
@@ -58,7 +68,10 @@
     <input type="range" id="s2" name="slider2" step=5 value=0 onChange="set_slider('s2');" min="0" max="100">   </input>
     <output name="x2"> </output>
     </form>
-    
+    </div>
+    </div>
+    </div>
+
     <h2>SSR 3</h2>
     <button type="button" id="s3_btn" onclick="changeState(1, 2);">ON</button>
     <button type="button" onclick="changeState(0, 2);">OFF</button>
@@ -74,7 +87,20 @@
     <h2>SSR 6</h2>
     <button type="button" id="s6_btn" onclick="changeState(1, 5);">ON</button>
     <button type="button" onclick="changeState(0, 5);">OFF</button>
-    
-</div>
-</body>
+
+    <div class="container">
+	<div class="row">
+    		<div class="col-xs-6">
+			<h4>Column 1</h4>
+		</div>
+
+    		<div class="col-xs-6">
+			<h4>Column 2</h4>
+		</div>
+	</div>
+    </div>
+
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+  </body>
 </html>
