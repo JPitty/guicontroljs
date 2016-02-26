@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Automation Web Server with BeagleBone</title>
-    <link href="/">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css", rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
     <script src = "/socket.io/socket.io.js" ></script>
     <script>
@@ -53,7 +53,7 @@
     <div class="col-xs-6">
     <h2>SSR 1 Heater</h2>
     <form oninput='x1.value=s1.value'>
-    <button type="button" class="btn btn-danger" id="s1_btn" onclick="changeState(1, 0);">ON</button>
+    <button type="button" class="btn btn-normal" id="s1_btn" onclick="changeState(1, 0);">ON</button>
     <button type="button" onclick="changeState(0, 0);">OFF</button>
     <input type="range" id="s1" name="slider1" step=5 value=0 onChange="set_slider('s1');" min="0" max="100">   </input>
     <output name="x1"> </output>
@@ -100,7 +100,7 @@
 	</div>
     </div>
 
-    <script src="/node_modules/jquery/dist/jquery.js"></script>
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/src/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
   </body>
 </html>
