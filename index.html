@@ -49,44 +49,46 @@
 </head>
   <body>
     <div class="container-fluid">
-    <div class="row">
-    <div class="col-xs-6">
-    <h2>SSR 1 Heater</h2>
-    <form oninput='x1.value=s1.value'>
-    <button type="button" class="btn btn-normal" id="s1_btn" onclick="changeState(1, 0);">ON</button>
-    <button type="button" onclick="changeState(0, 0);">OFF</button>
-    <input type="range" id="s1" name="slider1" step=5 value=0 onChange="set_slider('s1');" min="0" max="100">   </input>
-    <output name="x1"> </output>
-    </form>
+      <div class="row">
+        <div class="col-xs-6">
+          <h3>SSR 1: H2O Heater</h3>
+          <form oninput='x1.value=s1.value'>
+          <button type="button" class="btn btn-primary" id="s1_btn" onclick="changeState(1, 0);">ON</button>
+          <button type="button" class="btn btn-primary" onclick="changeState(0, 0);">OFF</button>
+          <p></p>
+          <input type="range" id="s1" name="slider1" step=5 value=0 onChange="set_slider('s1');" min="0" max="100">   </input>
+          <output name="x1"> </output>
+          </form>
+        </div>
+
+        <div class="col-xs-6">
+          <h3>SSR 2: Boil Kettle Heater</h3>
+          <form oninput='x2.value=s2.value'>
+          <button type="button" class="btn btn-primary" id="s2_btn" onclick="changeState(1, 1);">ON</button>
+          <button type="button" class="btn btn-primary" onclick="changeState(0, 1);">OFF</button>
+          <p></p>
+          <input type="range" id="s2" name="slider2" step=5 value=0 onChange="set_slider('s2');" min="0" max="100">   </input>
+          <output name="x2"> </output>
+          </form>
+        </div>
+      </div>
     </div>
 
-    <div class="col-xs-6">
-    <h2>SSR 2 Heater</h2>
-    <form oninput='x2.value=s2.value'>
-    <button type="button" id="s2_btn" onclick="changeState(1, 1);">ON</button>
-    <button type="button" onclick="changeState(0, 1);">OFF</button>
-    <input type="range" id="s2" name="slider2" step=5 value=0 onChange="set_slider('s2');" min="0" max="100">   </input>
-    <output name="x2"> </output>
-    </form>
-    </div>
-    </div>
-    </div>
-
-    <h2>SSR 3</h2>
-    <button type="button" id="s3_btn" onclick="changeState(1, 2);">ON</button>
-    <button type="button" onclick="changeState(0, 2);">OFF</button>
+    <h3>SSR 3</h3>
+    <button type="button" class="btn btn-primary" id="s3_btn" onclick="changeState(1, 2);">ON</button>
+    <button type="button" class="btn btn-primary" onclick="changeState(0, 2);">OFF</button>
     
-    <h2>SSR 4</h2>
-    <button type="button" id="s4_btn" onclick="changeState(1, 3);">ON</button>
-    <button type="button" onclick="changeState(0, 3);">OFF</button>
+    <h3>SSR 4</h3>
+    <button type="button" class="btn btn-primary" id="s4_btn" onclick="changeState(1, 3);">ON</button>
+    <button type="button" class="btn btn-primary" onclick="changeState(0, 3);">OFF</button>
     
-    <h2>SSR 5</h2>
-    <button type="button" id="s5_btn" onclick="changeState(1, 4);">ON</button>
-    <button type="button" onclick="changeState(0, 4);">OFF</button>
+    <h3>SSR 5</h3>
+    <button type="button" class="btn btn-primary" id="s5_btn" onclick="changeState(1, 4);">ON</button>
+    <button type="button" class="btn btn-primary" onclick="changeState(0, 4);">OFF</button>
     
-    <h2>SSR 6</h2>
-    <button type="button" id="s6_btn" onclick="changeState(1, 5);">ON</button>
-    <button type="button" onclick="changeState(0, 5);">OFF</button>
+    <h3>SSR 6</h3>
+    <button type="button" class="btn btn-primary" id="s6_btn" onclick="changeState(1, 5);">ON</button>
+    <button type="button" class="btn btn-primary" onclick="changeState(0, 5);">OFF</button>
 
     <div class="container">
 	<div class="row">
