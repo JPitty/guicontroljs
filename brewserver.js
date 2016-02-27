@@ -3,6 +3,12 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 var b = require('bonescript');
+var fs = require('fs');
+var tempsensor = require('ds18x20');
+
+// temp sensors
+var T1 = '28-000006a35e72';
+var temp1 = 0;
 
 // Create pin variables (these work with 4D 7" ts)
 var ssr = ["P8_11", "P8_12", "P8_14","P8_15", "P8_16", "P8_17","P8_20", "P8_21", "P8_23", "P8_24"];
@@ -52,7 +58,7 @@ io.on('connection', function (socket) {
 });
 
 // Starting button states
-var buts = [ 0, 0, 0, 0, 0, 0 ];
+var buts = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
 
 // Change state when a button is pressed
 function handleChangeState(data) {
@@ -66,9 +72,11 @@ function handleChangeState(data) {
 // Initial slider states
 var ontime1 = 0;
 var ontime2 = 0;
-// Gloabl timer for slider duty cycles
+
+// Gloabl timer for slider duty cycles, temp updates, ...
 var dcTimer = setInterval( function myF(){ 
         cycleChangeState();
+	getTemp();
       } , 5000);
 
 //Change slider duty cycle on time
@@ -109,6 +117,17 @@ function cycleChangeState() {
           console.log("H2 turned OFF");
       } , ontime2); //fix: specific to slider1
     }
+}
+
+function getTemp() {
+	//var tempfile='/sys/bus/w1/devices/28-000006a35e72/w1_slave'
+	//tempsensor.getAll(function (err, tempObj) {
+	//	    console.log(tempObj);
+	//});
+	tempsensor.get(T1, function (err, temp) {
+		temp1 = temp;
+	});
+	io.sockets.emit('tempState', temp1);
 }
 
 // Displaying a console message for user feedback

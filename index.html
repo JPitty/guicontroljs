@@ -23,7 +23,7 @@
         function set_slider(s){
             //console.log(document.getElementById(s).value);
             var v = document.getElementById(s).value;
-            var ssr_num
+	    var ssr_num;
             if (s=='s1'){
                 ssr_num = 0;
             }
@@ -43,7 +43,11 @@
                 document.getElementById(btns[data.ssr]).style.backgroundColor="lightgrey";
             }
         }); 
-        
+       
+	// Temps
+	socket.on('tempState', function(data) {
+                document.getElementById("t1").value=data;
+	});
         
     </script>
 </head>
@@ -55,10 +59,11 @@
           <form oninput='x1.value=s1.value'>
           <button type="button" class="btn btn-primary" id="s1_btn" onclick="changeState(1, 0);">ON</button>
           <button type="button" class="btn btn-primary" onclick="changeState(0, 0);">OFF</button>
+  	  <h3 style="display:inline">&nbsp&nbspTemp = <input type="text" id="t1" style="display:inline; width:60px; border:none"> </input></h3>
           <p></p>
           <input type="range" id="s1" name="slider1" step=5 value=0 onChange="set_slider('s1');" min="0" max="100">   </input>
           <output name="x1"> </output>
-          </form>
+	  </form>
         </div>
 
         <div class="col-xs-6">
