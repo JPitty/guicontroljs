@@ -5,7 +5,7 @@ var path = require('path');
 var b = require('bonescript');
 
 // Create pin variables (these work with 4D 7" ts)
-var ssr = ["P8_11", "P8_12", "P8_14","P8_15", "P8_16", "P8_17"];
+var ssr = ["P8_11", "P8_12", "P8_14","P8_15", "P8_16", "P8_17","P8_20", "P8_21", "P8_23", "P8_24"];
 
 // Initialize the pins as OUTPUT
 /*var i, len;
