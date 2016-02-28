@@ -1,0 +1,9 @@
+[Unit]
+Description=IO setup for brewserver.js
+
+[Service]
+Type=oneshot
+ExecStart=/var/lib/cloud9/Projects/guicontroljs/setup_pins.sh
+
+[Install]
+WantedBy=multi-user.target

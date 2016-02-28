@@ -25,3 +25,7 @@ echo low > /sys/class/gpio/gpio33/direction
 echo low > /sys/class/gpio/gpio36/direction
 echo low > /sys/class/gpio/gpio62/direction
 echo low > /sys/class/gpio/gpio63/direction
+
+# pin for one wire bus
+slot=`cat /sys/devices/platform/bone_capemgr/slots | grep BB-W1-P8.19 | awk -F "Manuf," '{ print $2 }'`
+if [ -z "$slot" ]; then echo BB-W1-P8.19 > /sys/devices/platform/bone_capemgr/slots; fi
