@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Automation Web Server with BeagleBone</title>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css", rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css", rel="stylesheet">
     <script src = "/socket.io/socket.io.js" ></script>
     <script>
         // Establishing connection with server
@@ -35,12 +35,12 @@
         }
         
         // Button colors
-        var btns = ["s1_btn", "s2_btn","s3_btn","s4_btn","s5_btn","s6_btn",]
+        var btns = ["s1_btn", "s2_btn","s3_btn","s4_btn","s5_btn","s6_btn","r1_btn","r2_btn","r3_btn","r4_btn"]
         socket.on('btnState', function(data) {
             if ( data.state == 1 ) {
                 document.getElementById(btns[data.ssr]).style.backgroundColor="red";
             } else {
-                document.getElementById(btns[data.ssr]).style.backgroundColor="lightgrey";
+                document.getElementById(btns[data.ssr]).style.backgroundColor="lightblue";
             }
         }); 
        
@@ -107,35 +107,35 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
 	<div class="row">
         <div class="col-xs-3">
 	    <h3>RLY 1</h3>
 	    <button type="button" class="btn btn-primary" id="r1_btn" onclick="changeState(1, 6);">ON</button>
-	    <button type="button" class="btn btn-primary" onclick="changeState(0, 2);">OFF</button>
+	    <button type="button" class="btn btn-primary" onclick="changeState(0, 6);">OFF</button>
         </div>
     
         <div class="col-xs-3">
-	    <h3>RLY 2</h3>
+	    <h3>RLY 2: FAN</h3>
 	    <button type="button" class="btn btn-primary" id="r2_btn" onclick="changeState(1, 7);">ON</button>
-	    <button type="button" class="btn btn-primary" onclick="changeState(0, 3);">OFF</button>
+	    <button type="button" class="btn btn-primary" onclick="changeState(0, 7);">OFF</button>
         </div>
     
         <div class="col-xs-3">
 	    <h3>RLY 3</h3>
 	    <button type="button" class="btn btn-primary" id="r3_btn" onclick="changeState(1, 8);">ON</button>
-	    <button type="button" class="btn btn-primary" onclick="changeState(0, 4);">OFF</button>
+	    <button type="button" class="btn btn-primary" onclick="changeState(0, 8);">OFF</button>
         </div>
     
         <div class="col-xs-3">
 	    <h3>RLY 4</h3>
 	    <button type="button" class="btn btn-primary" id="r4_btn" onclick="changeState(1, 9);">ON</button>
-	    <button type="button" class="btn btn-primary" onclick="changeState(0, 5);">OFF</button>
+	    <button type="button" class="btn btn-primary" onclick="changeState(0, 9);">OFF</button>
         </div>
 	</div>
     </div>
 
-    <script src="/src/jquery.js"></script>
+    <script src="src/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
   </body>
 </html>

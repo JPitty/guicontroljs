@@ -3,7 +3,6 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 var b = require('bonescript');
-var fs = require('fs');
 var tempsensor = require('ds18x20');
 
 // temp sensors
@@ -11,7 +10,7 @@ var T1 = '28-000006a35e72';
 var temp1 = 0;
 
 // Create pin variables (these work with 4D 7" ts)
-var ssr = ["P8_11", "P8_12", "P8_14","P8_15", "P8_16", "P8_17","P8_20", "P8_21", "P8_23", "P8_24"];
+var ssr = ["P8_11", "P8_12", "P8_14","P8_15", "P8_16", "P8_17","P9_25", "P9_27", "P8_23", "P8_24"];
 
 // Initialize the pins as OUTPUT
 /*var i, len;
@@ -22,14 +21,17 @@ for (len = ssr.length, i=0; i<len; ++i) {
 // Initialize the server on port 8888
 var server = http.createServer(function (req, res) {
     // requesting files
-    var file = '.'+((req.url=='/')?'/index.html':req.url);
+    // var file = '.'+((req.url=='/')?'/index.html':req.url);
+    var file = './var/lib/cloud9/Projects/guicontroljs/index.html';
+    //var file = './index.html';
     var fileExtension = path.extname(file);
     var contentType = 'text/html';
-    // Uncoment if you want to add css to your web page
-    /*
+
+    // Uncoment if you want to add css to your web page    
     if(fileExtension == '.css'){
         contentType = 'text/css';
-    }*/
+    }
+
     fs.exists(file, function(exists){
         if(exists) {
             fs.readFile(file, function(error, content){
@@ -48,10 +50,10 @@ var server = http.createServer(function (req, res) {
     })
 }).listen(8888);
 
-// Loading socket io module
+// Loading socket io module /usr/local/lib/node_modules/socket.io/node_modules/socket.io-client/
 var io = require('socket.io').listen(server);
 
-// When communication is established
+// When communication is established, call the fxn
 io.on('connection', function (socket) {
     socket.on('changeState', handleChangeState);
     socket.on('sliderState', handleSliderState);
@@ -97,25 +99,25 @@ function cycleChangeState() {
     // Heater 1 duty cycle switching
     //FIX: add IF to check button state on both, and check if ontime is > 4
     if ( buts[0] > 0) {
-      b.digitalWrite(ssr[2], 1 ); //fix: should be '0'
+      b.digitalWrite(ssr[0], 1 ); //fix: should be '0'
       io.sockets.emit('btnState', {ssr:0, state:1 });
       console.log("H1 turned ON");
       setTimeout( function myCycle () {
-          b.digitalWrite(ssr[2], 0 );
+          b.digitalWrite(ssr[0], 0 );
           io.sockets.emit('btnState', {ssr:0, state:0 });
           console.log("H1 turned OFF");
       } , ontime1); //fix: specific to slider1
     }
     // Heater 2 duty cycle switching
     if ( buts[1] > 0) {
-      b.digitalWrite(ssr[3], 1 ); //fix: should be '1'
+      b.digitalWrite(ssr[1], 1 ); //fix: should be '1'
       io.sockets.emit('btnState', {ssr:1, state:1 });
       console.log("H2 turned ON");
       setTimeout( function myCycle () {
-          b.digitalWrite(ssr[3], 0 );
+          b.digitalWrite(ssr[1], 0 );
           io.sockets.emit('btnState', {ssr:1, state:0 });
           console.log("H2 turned OFF");
-      } , ontime2); //fix: specific to slider1
+      } , ontime2);
     }
 }
 
@@ -124,6 +126,7 @@ function getTemp() {
 	//tempsensor.getAll(function (err, tempObj) {
 	//	    console.log(tempObj);
 	//});
+	//FIX: read multiple sensors
 	tempsensor.get(T1, function (err, temp) {
 		temp1 = temp;
 	});
