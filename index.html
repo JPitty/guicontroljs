@@ -39,8 +39,9 @@
         socket.on('btnState', function(data) {
             if ( data.state == 1 ) {
                 document.getElementById(btns[data.ssr]).style.backgroundColor="red";
-            } else {
-                document.getElementById(btns[data.ssr]).style.backgroundColor="lightblue";
+            } else { 
+		//back to default
+                document.getElementById(btns[data.ssr]).style.backgroundColor="#0099cc";
             }
         }); 
        
@@ -52,12 +53,14 @@
     </script>
 </head>
   <body>
+   <h2>Brew Controller</h2>
     <div class="container-fluid">
+     <div class = "panel panel-default">
       <div class="row">
         <div class="col-xs-6">
           <h3>SSR 1: H2O Heater</h3>
           <form oninput='x1.value=s1.value'>
-          <button type="button" class="btn btn-primary" id="s1_btn" onclick="changeState(1, 0);">ON</button>
+          <button type="button" class="btn btn-primary" id="s1_btn" onclick="changeState(1, 0); changeState(1, 7);">ON</button>
           <button type="button" class="btn btn-primary" onclick="changeState(0, 0);">OFF</button>
   	  <h3 style="display:inline">&nbsp&nbspTemp = <input type="text" id="t1" style="display:inline; width:60px; border:none"> </input></h3>
           <p></p>
@@ -69,17 +72,20 @@
         <div class="col-xs-6">
           <h3>SSR 2: Boil Kettle Heater</h3>
           <form oninput='x2.value=s2.value'>
-          <button type="button" class="btn btn-primary" id="s2_btn" onclick="changeState(1, 1);">ON</button>
+          <button type="button" class="btn btn-primary" id="s2_btn" onclick="changeState(1, 1); changeState(1, 7);">ON</button>
           <button type="button" class="btn btn-primary" onclick="changeState(0, 1);">OFF</button>
+  	  <h3 style="display:inline">&nbsp&nbspTemp = <input type="text" id="t2" style="display:inline; width:60px; border:none"> </input></h3>
           <p></p>
           <input type="range" id="s2" name="slider2" step=5 value=0 onChange="set_slider('s2');" min="0" max="100">   </input>
           <output name="x2"> </output>
           </form>
         </div>
       </div>
+     </div>
     </div>
 
     <div class="container-fluid">
+     <div class = "panel panel-default">
       <div class="row">
         <div class="col-xs-3">
 	    <h3>SSR 3</h3>
@@ -105,9 +111,11 @@
 	    <button type="button" class="btn btn-primary" onclick="changeState(0, 5);">OFF</button>
         </div>
       </div>
+     </div>
     </div>
 
     <div class="container-fluid">
+     <div class = "panel panel-default">
 	<div class="row">
         <div class="col-xs-3">
 	    <h3>RLY 1</h3>
@@ -133,6 +141,7 @@
 	    <button type="button" class="btn btn-primary" onclick="changeState(0, 9);">OFF</button>
         </div>
 	</div>
+     </div>
     </div>
 
     <script src="src/jquery.js"></script>
