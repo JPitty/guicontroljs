@@ -7,31 +7,61 @@ var tempsensor = require('ds18x20');
 
 // temp sensors
 var T1 = '28-000006a35e72';
+var Tsensors = [ '28-000006a35e72', '28-000006902652', '28-0000068f1f49'];
 var temp1 = 0;
+var temp2 = 0;
 
 // Create pin variables (these work with 4D 7" ts)
 var ssr = ["P8_11", "P8_12", "P8_14","P8_15", "P8_16", "P8_17","P9_25", "P9_27", "P8_23", "P8_24"];
 
-// Initialize the pins as OUTPUT
-/*var i, len;
-for (len = ssr.length, i=0; i<len; ++i) {
-  b.pinMode(ssr[i], b.OUTPUT);
-}*/
-
-// Initialize the server on port 8888
+// Initialize the server
 var server = http.createServer(function (req, res) {
     // requesting files
-    // var file = '.'+((req.url=='/')?'/index.html':req.url);
-    var file = './var/lib/cloud9/Projects/guicontroljs/index.html';
+    //var file = '.'+((req.url=='/')?'/index.html': req.url);
+    var file = ((req.url=='/')?__dirname + '/index.html':__dirname + req.url);
+    //var file = './var/lib/cloud9/Projects/guicontroljs/index.html';
     //var file = './index.html';
     var fileExtension = path.extname(file);
     var contentType = 'text/html';
 
-    // Uncoment if you want to add css to your web page    
-    if(fileExtension == '.css'){
-        contentType = 'text/css';
+    //if(fileExtension == '.css'){ *DOES NOT WORK
+    if(req.url.indexOf('.css') != -1){
+	file = req.url;
+	contentType = 'text/css';
+    }
+    
+    if(req.url.indexOf('.js') != -1){
+	file = req.url;
+	contentType = 'text/javascript';
+    }
+/*
+    if(req.url.indexOf('.html') != -1){ //req.url has the pathname, check if it conatins '.html'
+      fs.readFile(__dirname + '/index.html', function (err, data) {
+         if (err) console.log(err);
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(data);
+            res.end();
+      });
     }
 
+    if(req.url.indexOf('.js') != -1){ //req.url has the pathname, check if it conatins '.js'
+      fs.readFile(__dirname + '/js/script.js', function (err, data) {
+         if (err) console.log(err);
+           res.writeHead(200, {'Content-Type': 'text/javascript'});
+           res.write(data);
+           res.end();
+      });
+    }
+
+    if(req.url.indexOf('.css') != -1){ //req.url has the pathname, check if it conatins '.css'
+      fs.readFile(__dirname + '/public/css/bootstrapjp.css', function (err, data) {
+         if (err) console.log(err);
+           res.writeHead(200, {'Content-Type': 'text/css'});
+           res.write(data);
+           res.end();
+      });
+    }
+*/    
     fs.exists(file, function(exists){
         if(exists) {
             fs.readFile(file, function(error, content){
@@ -127,10 +157,14 @@ function getTemp() {
 	//	    console.log(tempObj);
 	//});
 	//FIX: read multiple sensors
-	tempsensor.get(T1, function (err, temp) {
+	tempsensor.get(Tsensors[0], function (err, temp) {
 		temp1 = temp;
 	});
-	io.sockets.emit('tempState', temp1);
+	tempsensor.get(Tsensors[1], function (err, temp) {
+		temp2 = temp;
+	});
+	var temps = [ temp1, temp2 ];
+	io.sockets.emit('tempState', temps);
 }
 
 // Displaying a console message for user feedback
