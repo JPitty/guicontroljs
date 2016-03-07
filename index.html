@@ -46,8 +46,10 @@
        
 	// Temps
 	socket.on('tempState', function(data) {
-                document.getElementById("t1").value=data[0];
-                document.getElementById("t2").value=data[1];
+		//console.log(data);
+		document.getElementById("t1").value=data["28-000006a35e72"];
+		document.getElementById("t2").value=data["28-000006902652"];
+		//document.getElementById("t3").value=data["28-0000068f1f49"];
 	});
         
     </script>

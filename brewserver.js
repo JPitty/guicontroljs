@@ -5,12 +5,6 @@ var path = require('path');
 var b = require('bonescript');
 var tempsensor = require('ds18x20');
 
-// temp sensors
-var T1 = '28-000006a35e72';
-var Tsensors = [ '28-000006a35e72', '28-000006902652', '28-0000068f1f49'];
-var temp1 = 0;
-var temp2 = 0;
-
 // Create pin variables (these work with 4D 7" ts)
 var ssr = ["P8_11", "P8_12", "P8_14","P8_15", "P8_16", "P8_17","P9_25", "P9_27", "P8_23", "P8_24"];
 
@@ -151,20 +145,15 @@ function cycleChangeState() {
     }
 }
 
+// temp sensors
+//var Tsensors = [ '28-000006a35e72', '28-000006902652', '28-0000068f1f49'];
+//var temps = [ 0, 0, 0 ];
+
 function getTemp() {
-	//var tempfile='/sys/bus/w1/devices/28-000006a35e72/w1_slave'
-	//tempsensor.getAll(function (err, tempObj) {
-	//	    console.log(tempObj);
-	//});
-	//FIX: read multiple sensors
-	tempsensor.get(Tsensors[0], function (err, temp) {
-		temp1 = temp;
-	});
-	tempsensor.get(Tsensors[1], function (err, temp) {
-		temp2 = temp;
-	});
-	var temps = [ temp1, temp2 ];
-	io.sockets.emit('tempState', temps);
+	// files in '/sys/bus/w1/devices/28-000006a35e72/w1_slave'
+	//temps = tempsensor.get(Tsensors);
+	var tempObj = tempsensor.getAll();
+	io.sockets.emit('tempState', tempObj);
 }
 
 // Displaying a console message for user feedback
