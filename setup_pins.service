@@ -4,6 +4,12 @@ Description=IO setup for brewserver.js
 [Service]
 Type=oneshot
 ExecStart=/var/lib/cloud9/Projects/guicontroljs/setup_pins.sh
+ExecStart=/bin/bash -c "/usr/bin/node /var/lib/cloud9/Projects/guicontroljs/brewserver.js"
+# ExecStart=/bin/bash -c "/usr/bin/qupzilla --fullscreen http://localhost:8888/"
+Environment=PATH=/bin:/usr/bin:/var/lib/cloud9/Projects/guicontroljs:/usr/local/lib/node_modules/:/var/lib/cloud9/bone101/static
+Environment=NODE_PATH=/usr/local/lib/node_modules:/var/lib/cloud9/bone101/static
+User=root
+Group=root
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=graphical.target
