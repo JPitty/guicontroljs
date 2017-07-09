@@ -19,17 +19,19 @@
             socket.emit('changeState', myPkg );
         }
         
+        // Set duty cycle with sliders
         function set_slider(s){
             //console.log(document.getElementById(s).value);
             var v = document.getElementById(s).value;
-	    var ssr_num;
-            if (s=='s1'){
+            var ssr_num;
+            if ( s=='s1' ){
                 ssr_num = 0;
             }
-            else if (s=='s2'){
+            else if ( s=='s2' ){
                 ssr_num = 1;
             }
             var myPkg = { "slider": ssr_num, "duty": v };
+            console.log(myPkg);
             socket.emit('sliderState', myPkg);
         }
         

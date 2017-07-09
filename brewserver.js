@@ -4,6 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var b = require('bonescript');
 var tempsensor = require('ds18x20');
+var liquidPID = require('liquid-pid'), actualP = 0, pidController;
 
 // Create pin variables (these work with 4D 7" ts)
 var ssr = ["P8_11", "P8_12", "P8_14","P8_15", "P8_16", "P8_17","P9_25", "P9_27", "P8_23", "P8_24"];
@@ -20,8 +21,8 @@ var server = http.createServer(function (req, res) {
 
     //if(fileExtension == '.css'){ *DOES NOT WORK
     if(req.url.indexOf('.css') != -1){
-	file = req.url;
-	contentType = 'text/css';
+	    file = req.url;
+	    contentType = 'text/css';
     }
     
     if(req.url.indexOf('.js') != -1){
@@ -101,47 +102,56 @@ var ontime2 = 0;
 
 // Gloabl timer for slider duty cycles, temp updates, ...
 var dcTimer = setInterval( function myF(){ 
-        cycleChangeState();
+  cycleChangeState();
 	getTemp();
-      } , 5000);
+} , 5000);
 
 //Change slider duty cycle on time
 function handleSliderState(data) {
   console.log(data);
   if ( data.slider == 0 ) {
       // Change the global ontime1 var
-      ontime1 = data.duty * 50;
+      ontime1 = data.duty;
   }
   else if ( data.slider == 1 ) {
       // Change the global ontime2 var
-      ontime2 = data.duty * 50;
+      ontime2 = data.duty;
   }
 }
 
 // One cycle that gets called repeatedly
 function cycleChangeState() {
     // Heater 1 duty cycle switching
-    //FIX: add IF to check button state on both, and check if ontime is > 4
     if ( buts[0] > 0) {
-      b.digitalWrite(ssr[0], 1 ); //fix: should be '0'
+      b.digitalWrite(ssr[0], 1 );
       io.sockets.emit('btnState', {ssr:0, state:1 });
-      console.log("H1 turned ON");
-      setTimeout( function myCycle () {
-          b.digitalWrite(ssr[0], 0 );
-          io.sockets.emit('btnState', {ssr:0, state:0 });
-          console.log("H1 turned OFF");
-      } , ontime1); //fix: specific to slider1
+      if ( ontime1 == 100 ) {
+        console.log("H1 is full on")
+      }
+      else {
+        console.log("H1 is cycling ON ", ontime1/20*1000);
+        setTimeout( function myCycle () {
+            b.digitalWrite(ssr[0], 0 );
+            io.sockets.emit('btnState', {ssr:0, state:0 });
+            console.log("H1 turned OFF");
+        } , ontime1/20*1000); // percentage / time basis in dcTimer (5 sec) * time(ms)
+      }
     }
     // Heater 2 duty cycle switching
     if ( buts[1] > 0) {
-      b.digitalWrite(ssr[1], 1 ); //fix: should be '1'
+      b.digitalWrite(ssr[1], 1 );
       io.sockets.emit('btnState', {ssr:1, state:1 });
-      console.log("H2 turned ON");
-      setTimeout( function myCycle () {
-          b.digitalWrite(ssr[1], 0 );
-          io.sockets.emit('btnState', {ssr:1, state:0 });
-          console.log("H2 turned OFF");
-      } , ontime2);
+      if ( ontime2 == 100 ) {
+        console.log("H2 is full on")
+      }
+      else {
+        console.log("H2 is cycling ON ", ontime2/20*1000);
+        setTimeout( function myCycle () {
+            b.digitalWrite(ssr[1], 0 );
+            io.sockets.emit('btnState', {ssr:1, state:0 });
+            console.log("H2 turned OFF");
+        } , ontime2/20*1000);
+      }
     }
 }
 
